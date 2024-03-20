@@ -150,6 +150,9 @@ void WebviewWinFloatingPlugin::HandleMethodCall(
         pwUserDataFolder = wUserDataFolder;
       }
     }
+   ;
+            std::cout << "[webview_win_floating] native convert userDataFolder to utf16 (WCHAR*) failed: path = " <<  wstr(pwUserDataFolder) << std::endl;
+
 
     MyWebView::Create(g_NativeHWND, onCreate, onPageStarted, onPageFinished, onPageTitleChanged, onWebMessageReceived, onMoveFocusRequest, onFullScreenChanged, onHistoryChanged, pwUserDataFolder);
 
