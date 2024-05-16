@@ -22,6 +22,7 @@ class WinNavigationDelegate {
   final PageTitleChangedCallback? onPageTitleChanged;
   final FullScreenChangedCallback? onFullScreenChanged;
   final HistoryChangedCallback? onHistoryChanged;
+  final OnWebMessageReceivedCallBack? onWebMessageReceived;
 
   WinNavigationDelegate({
     this.onNavigationRequest,
@@ -32,6 +33,7 @@ class WinNavigationDelegate {
     this.onPageTitleChanged,
     this.onFullScreenChanged,
     this.onHistoryChanged,
+    this.onWebMessageReceived,
   });
 }
 
@@ -41,6 +43,7 @@ typedef PageStartedCallback = void Function(String url);
 typedef PageFinishedCallback = void Function(String url);
 typedef PageTitleChangedCallback = void Function(String title);
 typedef JavaScriptMessageCallback = void Function(JavaScriptMessage message);
+typedef OnWebMessageReceivedCallBack = void Function(String message);
 typedef FullScreenChangedCallback = void Function(bool isFullScreen);
 typedef MoveFocusRequestCallback = void Function(bool isNext);
 typedef HistoryChangedCallback = void Function();
@@ -161,7 +164,9 @@ class WinWebViewController {
   }
 
   void notifyMessageReceived_(String message) {
-    //print("notifyMessageReceived_: $message");
+    if (_navigationDelegate.onWebMessageReceived != null) {
+      _navigationDelegate.onWebMessageReceived!(message);
+    }
     final jobj = json.decode(message);
     var channelName = jobj["JkChannelName"];
     if (channelName != null) {

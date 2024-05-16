@@ -62,6 +62,7 @@ class WindowsPlatformNavigationDelegate extends PlatformNavigationDelegate {
   PageEventCallback? onPageStarted;
   PageEventCallback? onPageFinished;
   WebResourceErrorCallback? onWebResourceError;
+  OnWebMessageReceivedCallBack? onWebMessageReceived;
 
   WindowsPlatformNavigationDelegate(
       PlatformNavigationDelegateCreationParams params)
@@ -89,9 +90,9 @@ class WindowsPlatformNavigationDelegate extends PlatformNavigationDelegate {
   }
 
   @override
-  Future<void> setOnWebResourceError(
-      WebResourceErrorCallback onWebResourceError) async {
-    this.onWebResourceError = onWebResourceError;
+  Future<void> setOnWebMessageReceived(
+      OnWebMessageReceivedCallBack onWebMessageReceived) async {
+    this.onWebMessageReceived = onWebMessageReceived;
   }
 }
 
@@ -163,6 +164,7 @@ class WindowsPlatformWebViewController extends PlatformWebViewController {
       onPageStarted: delegate.onPageStarted,
       onPageFinished: delegate.onPageFinished,
       onWebResourceError: delegate.onWebResourceError,
+      onWebMessageReceived: delegate.onWebMessageReceived,
     ));
   }
 
