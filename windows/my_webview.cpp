@@ -171,12 +171,9 @@ MyWebViewImpl::MyWebViewImpl(HWND hWnd,
                     Callback<ICoreWebView2WebMessageReceivedEventHandler>(
                         [=](ICoreWebView2* sender, ICoreWebView2WebMessageReceivedEventArgs* args) -> HRESULT {
                             if (onWebMessageReceived != NULL) {
-                                cout << "The logarithm value(base-e) of " << endl;
                                 wil::unique_cotaskmem_string json;
                                 HRESULT hr = args->get_WebMessageAsJson(&json);
                                 if (SUCCEEDED(hr)) {
-                                const std::string message = util::Utf8FromUtf16(json.get());
-                                count<< message<<endl;
                                 onWebMessageReceived(Utf8FromUtf16(json.get()));
                                 }
                             }
