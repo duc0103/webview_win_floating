@@ -166,22 +166,6 @@ MyWebViewImpl::MyWebViewImpl(HWND hWnd,
                 m_pController = controller;
 
                 m_pSettings->put_AreDefaultContextMenusEnabled(FALSE);
-#ifndef _DEBUG
-                m_pWebview->add_WebMessageReceived(
-                    Callback<ICoreWebView2WebMessageReceivedEventHandler>(
-                        [=](ICoreWebView2* sender, ICoreWebView2WebMessageReceivedEventArgs* args) -> HRESULT {
-                            if (onWebMessageReceived != NULL) {
-                                wil::unique_cotaskmem_string json;
-                                HRESULT hr = args->get_WebMessageAsJson(&json);
-                                if (SUCCEEDED(hr)) {
-                                onWebMessageReceived(Utf8FromUtf16(json.get()));
-                                }
-                            }
-                            return S_OK;
-                        }).Get(), NULL);
-                m_pSettings->put_AreDevToolsEnabled(FALSE);
-#endif
-
                 m_pWebview->add_NavigationStarting(
                     Callback<ICoreWebView2NavigationStartingEventHandler>(
                         [=](ICoreWebView2* sender, ICoreWebView2NavigationStartingEventArgs* args) -> HRESULT {
